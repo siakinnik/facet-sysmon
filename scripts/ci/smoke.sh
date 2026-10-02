@@ -10,7 +10,7 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
 input="$(printf '%s\n' \
-    "{\"t\":\"hello\",\"api\":2,\"data_dir\":\"$work\",\"locale\":\"en\",\"timezone\":\"UTC\"}" \
+    "{\"t\":\"hello\",\"api\":3,\"data_dir\":\"$work\",\"locale\":\"en\",\"timezone\":\"UTC\"}" \
     '{"t":"ping","seq":7}' \
     '{"t":"shutdown"}')"
 out="$(printf '%s\n' "$input" | FACET_PLUGIN_DATA="$work" timeout 30 "${runner[@]}" "$bin")"
@@ -24,7 +24,7 @@ check() {
 }
 check '"t":"hello"' "hello reply"
 check '"id":"sysmon"' "plugin id"
-check '"api":2' "API version"
+check '"api":3' "API version"
 check '"sdk":' "SDK version"
 check '"t":"pong"' "pong"
 check '"seq":7' "ping sequence"

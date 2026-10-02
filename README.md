@@ -21,7 +21,8 @@ doubles as a home server. Runs as an out-of-process plugin of
 
 The menu tile shows `CPU 12% · RAM 43% · 52°C`.
 
-Needs Facet 0.3 (API 2) and the `system.stats` permission (Settings > Apps):
+Needs Facet 0.4 (API 3), the `system.stats` permission (Settings > Apps) and
+`background` (granted by default, keeps the tile current):
 in its container it then sees the host's `/proc`, `/sys` and file systems,
 read-only, like any user of the device.
 

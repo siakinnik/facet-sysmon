@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake ninja-build
+
+      - name: Check that code is English (translations only in i18n/)
+        run: python3 scripts/check_i18n.py
+
+      - name: Check version consistency (CMakeLists.txt vs manifest.json)
+        run: bash scripts/version.sh
+
+      - name: Build (SDK downloaded from facet-core)
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+
+      - name: Unit tests
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Build (static, as released)
+        run: |
+          cmake -S . -B build-static -G Ninja -DCMAKE_BUILD_TYPE=Release -DSYSMON_STATIC=ON
+          cmake --build build-static --target sysmon
+
+      - name: Protocol smoke test
+        run: bash scripts/ci/smoke.sh build-static/sysmon.plugin/sysmon

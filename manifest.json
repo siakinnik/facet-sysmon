@@ -1,0 +1,9 @@
+{
+  "id": "sysmon",
+  "name": { "en": "System monitor", "ru": "Мониторинг" },
+  "version": "0.1.0-alpha",
+  "api": 2,
+  "exec": "sysmon",
+  "permissions": ["system.stats"],
+  "tile": { "icon": "gauge" }
+}

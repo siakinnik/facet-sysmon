@@ -1,7 +1,7 @@
 {
   "id": "sysmon",
   "name": { "en": "System monitor", "ru": "Мониторинг" },
-  "version": "0.2.0-alpha",
+  "version": "0.2.1-alpha",
   "api": 3,
   "exec": "sysmon",
   "permissions": ["system.stats", "background"],
